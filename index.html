@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DueMate — Ecureye</title>
+  <meta name="description" content="DueMate by Ecureye — A modern platform for managing customers, loans, repayments, reminders, reports, and notifications." />
+  <style>
+    :root{
+      --bg:#070A12;
+      --panel:#0E1424;
+      --panel2:#0B1020;
+      --text:#EAF2FF;
+      --muted:#A8B6D1;
+      --border:rgba(148,163,184,.18);
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --link:#7DD3FC;
+      --ring: rgba(125,211,252,.35);
+      --radius: 18px;
+
+      --g1: radial-gradient(1200px 500px at 20% -10%, rgba(99,102,241,.30), transparent 60%),
+            radial-gradient(1200px 500px at 80% 0%, rgba(34,211,238,.22), transparent 55%),
+            radial-gradient(1000px 600px at 70% 120%, rgba(167,139,250,.20), transparent 55%);
+      --glass: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#F6F8FF;
+        --panel:#FFFFFF;
+        --panel2:#FFFFFF;
+        --text:#0B1220;
+        --muted:#4B5A6A;
+        --border:rgba(15,23,42,.12);
+        --shadow: 0 18px 60px rgba(2,8,23,.10);
+        --link:#0369A1;
+        --ring: rgba(3,105,161,.22);
+        --glass: linear-gradient(180deg, rgba(2,8,23,.04), rgba(2,8,23,.02));
+        --g1: radial-gradient(1200px 500px at 20% -10%, rgba(99,102,241,.18), transparent 60%),
+              radial-gradient(1200px 500px at 80% 0%, rgba(34,211,238,.12), transparent 55%),
+              radial-gradient(1000px 600px at 70% 120%, rgba(167,139,250,.12), transparent 55%);
+      }
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height:1.55;
+      overflow-x:hidden;
+    }
+    a{ color:var(--link); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    .bg{
+      position:fixed; inset:0;
+      background: var(--g1);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .wrap{ max-width:1100px; margin:0 auto; padding: 22px 18px 70px; }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      padding: 12px 14px;
+      border:1px solid var(--border);
+      background: var(--glass);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: sticky; top: 12px;
+      z-index: 10;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; min-width: 180px;
+    }
+    .logo{
+      width:36px; height:36px; border-radius: 12px;
+      background:
+        radial-gradient(10px 10px at 30% 30%, rgba(255,255,255,.85), transparent 60%),
+        linear-gradient(135deg, rgba(99,102,241,.95), rgba(34,211,238,.85));
+      box-shadow: 0 10px 26px rgba(99,102,241,.22);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    .brand .name{ font-weight: 750; letter-spacing: .2px; }
+    .brand .sub{ display:block; font-size: 12px; color: var(--muted); margin-top: -2px; }
+
+    .navlinks{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .chip:hover{ background: rgba(255,255,255,.06); text-decoration:none; }
+    .chip:focus{ outline:none; box-shadow: 0 0 0 4px var(--ring); }
+
+    .lang{
+      display:flex; align-items:center; gap:10px;
+    }
+    label{ color: var(--muted); font-size: 13px; }
+    select{
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      appearance:none;
+    }
+    select:focus{ outline:none; box-shadow: 0 0 0 4px var(--ring); }
+
+    .hero{
+      margin-top: 22px;
+      padding: 28px 22px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border-radius: calc(var(--radius) + 8px);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(500px 160px at 20% 10%, rgba(34,211,238,.18), transparent 60%),
+        radial-gradient(520px 180px at 78% 0%, rgba(99,102,241,.18), transparent 65%);
+      pointer-events:none;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+      align-items: start;
+      position: relative;
+      z-index: 1;
+    }
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .brand{ min-width: unset; }
+    }
+
+    h1{
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.05;
+      margin: 0 0 12px;
+      letter-spacing: -0.6px;
+    }
+    .lede{
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 60ch;
+    }
+    .cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top: 14px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      font-weight: 650;
+      font-size: 14px;
+      text-decoration:none;
+      transition: transform .06s ease, background .12s ease;
+    }
+    .btn:hover{ background: rgba(255,255,255,.08); text-decoration:none; transform: translateY(-1px); }
+    .btn:focus{ outline:none; box-shadow: 0 0 0 4px var(--ring); }
+    .btn.primary{
+      border-color: rgba(125,211,252,.35);
+      background: linear-gradient(135deg, rgba(99,102,241,.85), rgba(34,211,238,.78));
+      box-shadow: 0 14px 38px rgba(34,211,238,.12);
+    }
+    .btn.primary:hover{ transform: translateY(-1px); filter: brightness(1.03); }
+
+    .metrics{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .metric{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 14px 14px;
+    }
+    .metric b{ display:block; font-size: 14px; margin-bottom: 4px; }
+    .metric span{ color: var(--muted); font-size: 13px; }
+
+    .section{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+    @media (max-width: 900px){ .cards{ grid-template-columns: 1fr; } }
+
+    .card{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 8px 22px rgba(0,0,0,.10);
+    }
+    .card h3{ margin: 0 0 8px; font-size: 16px; }
+    .card p{ margin: 0; color: var(--muted); }
+    .icon{
+      width: 38px; height: 38px;
+      border-radius: 14px;
+      display:grid; place-items:center;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 900px){ .split{ grid-template-columns: 1fr; } }
+
+    .callout{
+      border:1px dashed rgba(125,211,252,.35);
+      background: rgba(125,211,252,.06);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      color: var(--text);
+    }
+    .callout p{ margin: 6px 0; color: var(--muted); }
+    .callout b{ display:block; margin-bottom: 4px; }
+
+    .footer{
+      margin-top: 26px;
+      padding: 18px 2px 0;
+      color: var(--muted);
+      font-size: 13px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap: 10px;
+    }
+
+    /* Simple in-page anchor offset for sticky nav */
+    .anchor{ scroll-margin-top: 84px; }
+  </style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <nav class="nav" role="navigation" aria-label="Primary">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="name">DueMate</div>
+          <span class="sub" id="brandSub">by Ecureye</span>
+        </div>
+      </div>
+
+      <div class="navlinks">
+        <a class="chip" href="#features" id="navFeatures">Features</a>
+        <a class="chip" href="#security" id="navSecurity">Security</a>
+        <a class="chip" href="#privacy" id="navPrivacy">Privacy</a>
+        <a class="chip" href="privacy-policy.html" id="navPrivacyPolicy">Privacy Policy</a>
+      </div>
+
+      <div class="lang">
+        <label for="langSelect" id="langLabel">Language</label>
+        <select id="langSelect" aria-label="Language selector">
+          <option value="auto">Auto</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+        </select>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <h1 id="heroTitle">Modern collections & repayment tracking, built for teams.</h1>
+          <p class="lede" id="heroLede">
+            DueMate helps organizations manage customers, loans, repayments, reminders, and reporting in one secure platform —
+            with role-based access and audit trails.
+          </p>
+
+          <div class="cta-row">
+            <a class="btn primary" href="#features" id="ctaExplore">Explore features</a>
+            <a class="btn" href="privacy-policy.html" id="ctaPrivacy">Read privacy policy</a>
+          </div>
+
+          <div class="section">
+            <div class="callout">
+              <b id="calloutTitle">Designed for clarity</b>
+              <p id="calloutText">
+                Keep operations consistent with templates, scheduled reminders, and export-ready reporting.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="metrics" aria-label="Highlights">
+          <div class="metric">
+            <b id="m1Title">Role-based access</b>
+            <span id="m1Text">Admins, staff, and customers see only what they’re allowed to.</span>
+          </div>
+          <div class="metric">
+            <b id="m2Title">Reminders & notifications</b>
+            <span id="m2Text">Send SMS/email/in-app alerts using configurable templates.</span>
+          </div>
+          <div class="metric">
+            <b id="m3Title">Audit & traceability</b>
+            <span id="m3Text">Track sensitive actions with logs to support compliance.</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="features" class="anchor">
+      <div class="section">
+        <h2 id="featuresTitle" style="margin:0;">Features</h2>
+        <p id="featuresIntro" class="lede" style="margin:8px 0 0;">
+          Everything you need to track accounts, repayments, and communications — with clean workflows and strong controls.
+        </p>
+
+        <div class="cards" role="list">
+          <div class="card" role="listitem">
+            <div class="icon" aria-hidden="true">👥</div>
+            <h3 id="f1Title">Customer management</h3>
+            <p id="f1Text">Centralize customer profiles, notes, tags, and activity history.</p>
+          </div>
+          <div class="card" role="listitem">
+            <div class="icon" aria-hidden="true">📄</div>
+            <h3 id="f2Title">Loan & schedule tracking</h3>
+            <p id="f2Text">Create accounts, set schedules, and monitor status over time.</p>
+          </div>
+          <div class="card" role="listitem">
+            <div class="icon" aria-hidden="true">💳</div>
+            <h3 id="f3Title">Payments & repayments</h3>
+            <p id="f3Text">Record payments, reconcile repayments, and view balances and history.</p>
+          </div>
+
+          <div class="card" role="listitem">
+            <div class="icon" aria-hidden="true">⏰</div>
+            <h3 id="f4Title">Reminders & dunning</h3>
+            <p id="f4Text">Automate follow-ups and send reminders when action is needed.</p>
+          </div>
+          <div class="card" role="listitem">
+            <div class="icon" aria-hidden="true">📣</div>
+            <h3 id="f5Title">Announcements & notifications</h3>
+            <p id="f5Text">Communicate clearly using templates and delivery tracking.</p>
+          </div>
+          <div class="card" role="listitem">
+            <div class="icon" aria-hidden="true">📊</div>
+            <h3 id="f6Title">Reporting & exports</h3>
+            <p id="f6Text">Generate statements and reports for operational oversight and sharing.</p>
+          </div>
+        </div>
+
+        <div class="split">
+          <div class="card">
+            <div class="icon" aria-hidden="true">🧩</div>
+            <h3 id="f7Title">Integrations & webhooks</h3>
+            <p id="f7Text">Connect external systems using integrations, API keys, and webhook events.</p>
+          </div>
+          <div class="card">
+            <div class="icon" aria-hidden="true">🗂️</div>
+            <h3 id="f8Title">Files & attachments</h3>
+            <p id="f8Text">Store related documents and references alongside the right records.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="security" class="anchor">
+      <div class="section">
+        <h2 id="securityTitle" style="margin:0;">Security & Control</h2>
+        <p id="securityIntro" class="lede" style="margin:8px 0 0;">
+          Built with operational safeguards in mind — so teams can work confidently.
+        </p>
+
+        <div class="split">
+          <div class="card">
+            <div class="icon" aria-hidden="true">🔐</div>
+            <h3 id="s1Title">Access governance</h3>
+            <p id="s1Text">Permissions, roles, and tenant-aware separation support secure operations.</p>
+          </div>
+          <div class="card">
+            <div class="icon" aria-hidden="true">🧾</div>
+            <h3 id="s2Title">Audit trails</h3>
+            <p id="s2Text">Log key actions for accountability, troubleshooting, and compliance workflows.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy" class="anchor">
+      <div class="section">
+        <h2 id="privacyTitle" style="margin:0;">Privacy</h2>
+        <p id="privacyIntro" class="lede" style="margin:8px 0 0;">
+          We aim to be transparent about how data is handled. Read the full privacy policy for details.
+        </p>
+
+        <div class="callout">
+          <b id="privacyCalloutTitle">Privacy Policy</b>
+          <p id="privacyCalloutText">
+            View our privacy policy for information about data collection, usage, and user rights.
+          </p>
+          <p style="margin-top:10px;">
+            <a class="btn" href="privacy-policy.html" id="privacyBtn">Open privacy-policy.html</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <span id="footerLeft">© <span id="year"></span> Ecureye. All rights reserved.</span>
+      </div>
+      <div>
+        <a href="privacy-policy.html" id="footerPrivacy">Privacy Policy</a>
+        <span class="muted"> · </span>
+        <span class="muted" id="footerNote">This page adapts to your device language.</span>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // ---- Language aware page (auto by browser/device) + manual override (matches privacy policy approach) ----
+    const STORAGE_KEY = "ecureye_site_lang_pref"; // "auto" | "en" | "fr"
+
+    const i18n = {
+      en: {
+        brandSub: "by Ecureye",
+        navFeatures: "Features",
+        navSecurity: "Security",
+        navPrivacy: "Privacy",
+        navPrivacyPolicy: "Privacy Policy",
+        langLabel: "Language",
+
+        heroTitle: "Modern collections & repayment tracking, built for teams.",
+        heroLede:
+          "DueMate helps organizations manage customers, loans, repayments, reminders, and reporting in one secure platform — with role-based access and audit trails.",
+        ctaExplore: "Explore features",
+        ctaPrivacy: "Read privacy policy",
+
+        calloutTitle: "Designed for clarity",
+        calloutText: "Keep operations consistent with templates, scheduled reminders, and export-ready reporting.",
+
+        m1Title: "Role-based access",
+        m1Text: "Admins, staff, and customers see only what they’re allowed to.",
+        m2Title: "Reminders & notifications",
+        m2Text: "Send SMS/email/in-app alerts using configurable templates.",
+        m3Title: "Audit & traceability",
+        m3Text: "Track sensitive actions with logs to support compliance.",
+
+        featuresTitle: "Features",
+        featuresIntro:
+          "Everything you need to track accounts, repayments, and communications — with clean workflows and strong controls.",
+
+        f1Title: "Customer management",
+        f1Text: "Centralize customer profiles, notes, tags, and activity history.",
+        f2Title: "Loan & schedule tracking",
+        f2Text: "Create accounts, set schedules, and monitor status over time.",
+        f3Title: "Payments & repayments",
+        f3Text: "Record payments, reconcile repayments, and view balances and history.",
+        f4Title: "Reminders & dunning",
+        f4Text: "Automate follow-ups and send reminders when action is needed.",
+        f5Title: "Announcements & notifications",
+        f5Text: "Communicate clearly using templates and delivery tracking.",
+        f6Title: "Reporting & exports",
+        f6Text: "Generate statements and reports for operational oversight and sharing.",
+        f7Title: "Integrations & webhooks",
+        f7Text: "Connect external systems using integrations, API keys, and webhook events.",
+        f8Title: "Files & attachments",
+        f8Text: "Store related documents and references alongside the right records.",
+
+        securityTitle: "Security & Control",
+        securityIntro:
+          "Built with operational safeguards in mind — so teams can work confidently.",
+        s1Title: "Access governance",
+        s1Text: "Permissions, roles, and tenant-aware separation support secure operations.",
+        s2Title: "Audit trails",
+        s2Text: "Log key actions for accountability, troubleshooting, and compliance workflows.",
+
+        privacyTitle: "Privacy",
+        privacyIntro:
+          "We aim to be transparent about how data is handled. Read the full privacy policy for details.",
+        privacyCalloutTitle: "Privacy Policy",
+        privacyCalloutText:
+          "View our privacy policy for information about data collection, usage, and user rights.",
+        privacyBtn: "Open privacy-policy.html",
+
+        footerPrivacy: "Privacy Policy",
+        footerNote: "This page adapts to your device language."
+      },
+      fr: {
+        brandSub: "par Ecureye",
+        navFeatures: "Fonctionnalités",
+        navSecurity: "Sécurité",
+        navPrivacy: "Confidentialité",
+        navPrivacyPolicy: "Politique de confidentialité",
+        langLabel: "Langue",
+
+        heroTitle: "Suivi moderne des encaissements et des remboursements, pensé pour les équipes.",
+        heroLede:
+          "DueMate aide les organisations à gérer les clients, les prêts, les remboursements, les rappels et les rapports sur une plateforme sécurisée — avec des accès par rôles et des pistes d’audit.",
+        ctaExplore: "Découvrir les fonctionnalités",
+        ctaPrivacy: "Lire la politique",
+
+        calloutTitle: "Conçu pour la clarté",
+        calloutText: "Standardisez vos opérations grâce aux modèles, rappels planifiés et rapports prêts à exporter.",
+
+        m1Title: "Accès par rôles",
+        m1Text: "Admins, agents et clients ne voient que ce qui leur est autorisé.",
+        m2Title: "Rappels & notifications",
+        m2Text: "Envoyez des alertes SMS/e-mail/in-app via des modèles configurables.",
+        m3Title: "Audit & traçabilité",
+        m3Text: "Suivez les actions sensibles grâce aux journaux pour la conformité.",
+
+        featuresTitle: "Fonctionnalités",
+        featuresIntro:
+          "Tout le nécessaire pour suivre les comptes, les remboursements et les communications — avec des workflows clairs et des contrôles solides.",
+
+        f1Title: "Gestion des clients",
+        f1Text: "Centralisez profils, notes, tags et historique d’activité.",
+        f2Title: "Suivi des prêts & échéanciers",
+        f2Text: "Créez des comptes, définissez des échéanciers et suivez l’état dans le temps.",
+        f3Title: "Paiements & remboursements",
+        f3Text: "Enregistrez les paiements, rapprochez les remboursements et consultez soldes et historique.",
+        f4Title: "Rappels & relances",
+        f4Text: "Automatisez les suivis et envoyez des rappels quand une action est nécessaire.",
+        f5Title: "Annonces & notifications",
+        f5Text: "Communiquez clairement via des modèles et le suivi de livraison.",
+        f6Title: "Rapports & exports",
+        f6Text: "Générez relevés et rapports pour le pilotage et le partage.",
+        f7Title: "Intégrations & webhooks",
+        f7Text: "Connectez des systèmes externes via intégrations, clés API et événements webhook.",
+        f8Title: "Fichiers & pièces jointes",
+        f8Text: "Stockez les documents et références au bon endroit, avec les bons dossiers.",
+
+        securityTitle: "Sécurité & contrôle",
+        securityIntro:
+          "Conçu avec des garde-fous opérationnels — pour travailler en toute confiance.",
+        s1Title: "Gouvernance des accès",
+        s1Text: "Permissions, rôles et séparation par tenant pour une exploitation sécurisée.",
+        s2Title: "Pistes d’audit",
+        s2Text: "Journalisez les actions clés pour la responsabilité et la conformité.",
+
+        privacyTitle: "Confidentialité",
+        privacyIntro:
+          "Nous visons la transparence sur le traitement des données. Consultez la politique complète pour les détails.",
+        privacyCalloutTitle: "Politique de confidentialité",
+        privacyCalloutText:
+          "Consultez notre politique pour comprendre la collecte, l’usage des données et vos droits.",
+        privacyBtn: "Ouvrir privacy-policy.html",
+
+        footerPrivacy: "Politique de confidentialité",
+        footerNote: "Cette page s’adapte à la langue de votre appareil."
+      }
+    };
+
+    const ids = [
+      "brandSub","navFeatures","navSecurity","navPrivacy","navPrivacyPolicy","langLabel",
+      "heroTitle","heroLede","ctaExplore","ctaPrivacy",
+      "calloutTitle","calloutText",
+      "m1Title","m1Text","m2Title","m2Text","m3Title","m3Text",
+      "featuresTitle","featuresIntro",
+      "f1Title","f1Text","f2Title","f2Text","f3Title","f3Text","f4Title","f4Text",
+      "f5Title","f5Text","f6Title","f6Text","f7Title","f7Text","f8Title","f8Text",
+      "securityTitle","securityIntro","s1Title","s1Text","s2Title","s2Text",
+      "privacyTitle","privacyIntro","privacyCalloutTitle","privacyCalloutText","privacyBtn",
+      "footerPrivacy","footerNote"
+    ];
+
+    function getBrowserLang(){
+      const langs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || "en"];
+      const first = (langs[0] || "en").toLowerCase();
+      return first.startsWith("fr") ? "fr" : "en";
+    }
+
+    function applyLang(lang){
+      const dict = i18n[lang] || i18n.en;
+
+      // Set <html lang="">
+      document.documentElement.lang = lang;
+
+      // Update text content for mapped elements
+      for (const id of ids){
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (dict[id] != null) el.textContent = dict[id];
+      }
+
+      // Keep page title aligned with language
+      document.title = (lang === "fr") ? "DueMate — Ecureye" : "DueMate — Ecureye";
+
+      // Update meta description (optional)
+      const meta = document.querySelector('meta[name="description"]');
+      if (meta){
+        meta.setAttribute("content",
+          (lang === "fr")
+            ? "DueMate par Ecureye — Plateforme moderne pour gérer clients, prêts, remboursements, rappels, rapports et notifications."
+            : "DueMate by Ecureye — A modern platform for managing customers, loans, repayments, reminders, reports, and notifications."
+        );
+      }
+    }
+
+    function init(){
+      // year
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      const select = document.getElementById("langSelect");
+      const saved = localStorage.getItem(STORAGE_KEY) || "auto";
+      select.value = saved;
+
+      if (saved === "en" || saved === "fr"){
+        applyLang(saved);
+      } else {
+        applyLang(getBrowserLang());
+      }
+
+      select.addEventListener("change", () => {
+        const choice = select.value;
+        localStorage.setItem(STORAGE_KEY, choice);
+        if (choice === "auto") applyLang(getBrowserLang());
+        else applyLang(choice);
+      });
+
+      // Re-apply on focus if auto
+      window.addEventListener("focus", () => {
+        const pref = localStorage.getItem(STORAGE_KEY) || "auto";
+        if (pref === "auto") applyLang(getBrowserLang());
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
