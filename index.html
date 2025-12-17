@@ -5,39 +5,42 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>DueMate — Ecureye</title>
   <meta name="description" content="DueMate by Ecureye — A modern platform for managing customers, loans, repayments, reminders, reports, and notifications." />
+  <link rel="preload" as="image" href="assets/images/DueMate-Icon-v2.png" type="image/png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/images/DueMate-Icon-v2.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/DueMate-Icon-v2.png" />
+  <link rel="shortcut icon" href="assets/images/DueMate-Icon-v2.png" />
   <style>
     :root{
-      --bg:#070A12;
-      --panel:#0E1424;
-      --panel2:#0B1020;
-      --text:#EAF2FF;
-      --muted:#A8B6D1;
-      --border:rgba(148,163,184,.18);
-      --shadow: 0 18px 60px rgba(0,0,0,.35);
-      --link:#7DD3FC;
-      --ring: rgba(125,211,252,.35);
+      --primary:#1F3B73;
+      --secondary:#4FA3DC;
+      --bg:#F5F7FB;
+      --panel:#FFFFFF;
+      --panel2:#EFF4FF;
+      --text:#0B1E3D;
+      --muted:#4C628A;
+      --border:rgba(15,23,42,.08);
+      --shadow: 0 25px 60px rgba(31,59,115,.14);
+      --link:var(--primary);
+      --ring: rgba(79,163,220,.35);
       --radius: 18px;
 
-      --g1: radial-gradient(1200px 500px at 20% -10%, rgba(99,102,241,.30), transparent 60%),
-            radial-gradient(1200px 500px at 80% 0%, rgba(34,211,238,.22), transparent 55%),
-            radial-gradient(1000px 600px at 70% 120%, rgba(167,139,250,.20), transparent 55%);
-      --glass: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      --g1: radial-gradient(1100px 500px at 10% -20%, rgba(79,163,220,.15), transparent 55%),
+            radial-gradient(900px 420px at 90% 10%, rgba(31,59,115,.18), transparent 60%),
+            linear-gradient(140deg, rgba(255,255,255,.0), rgba(255,255,255,.14));
+      --glass: linear-gradient(135deg, rgba(255,255,255,.85), rgba(255,255,255,.6));
     }
-    @media (prefers-color-scheme: light){
+    @media (prefers-color-scheme: dark){
       :root{
-        --bg:#F6F8FF;
-        --panel:#FFFFFF;
-        --panel2:#FFFFFF;
-        --text:#0B1220;
-        --muted:#4B5A6A;
-        --border:rgba(15,23,42,.12);
-        --shadow: 0 18px 60px rgba(2,8,23,.10);
-        --link:#0369A1;
-        --ring: rgba(3,105,161,.22);
-        --glass: linear-gradient(180deg, rgba(2,8,23,.04), rgba(2,8,23,.02));
-        --g1: radial-gradient(1200px 500px at 20% -10%, rgba(99,102,241,.18), transparent 60%),
-              radial-gradient(1200px 500px at 80% 0%, rgba(34,211,238,.12), transparent 55%),
-              radial-gradient(1000px 600px at 70% 120%, rgba(167,139,250,.12), transparent 55%);
+        --bg:#050C1A;
+        --panel:#0E1424;
+        --panel2:#0B1020;
+        --text:#EAF2FF;
+        --muted:#9CB1DB;
+        --border:rgba(148,163,184,.18);
+        --shadow: 0 18px 60px rgba(0,0,0,.45);
+        --glass: linear-gradient(135deg, rgba(7,11,20,.9), rgba(15,23,42,.8));
+        --g1: radial-gradient(1200px 500px at 20% -10%, rgba(79,163,220,.30), transparent 60%),
+              radial-gradient(1200px 500px at 80% 0%, rgba(31,59,115,.30), transparent 55%);
       }
     }
 
@@ -47,8 +50,9 @@
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
       background: var(--bg);
       color: var(--text);
-      line-height:1.55;
+      line-height:1.6;
       overflow-x:hidden;
+      min-height:100vh;
     }
     a{ color:var(--link); text-decoration:none; }
     a:hover{ text-decoration:underline; }
@@ -60,16 +64,16 @@
       z-index:-1;
     }
 
-    .wrap{ max-width:1100px; margin:0 auto; padding: 22px 18px 70px; }
+    .wrap{ max-width:1200px; margin:0 auto; padding: 24px 20px 80px; }
     .nav{
       display:flex; align-items:center; justify-content:space-between; gap:14px;
-      padding: 12px 14px;
+      padding: 14px 18px;
       border:1px solid var(--border);
       background: var(--glass);
-      border-radius: 999px;
+      border-radius: 20px;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       position: sticky; top: 12px;
       z-index: 10;
     }
@@ -77,51 +81,68 @@
       display:flex; align-items:center; gap:10px; min-width: 180px;
     }
     .logo{
-      width:36px; height:36px; border-radius: 12px;
+      width:46px; height:46px; border-radius: 16px;
       background:
-        radial-gradient(10px 10px at 30% 30%, rgba(255,255,255,.85), transparent 60%),
-        linear-gradient(135deg, rgba(99,102,241,.95), rgba(34,211,238,.85));
-      box-shadow: 0 10px 26px rgba(99,102,241,.22);
-      border: 1px solid rgba(255,255,255,.14);
+        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.92), transparent 68%),
+        linear-gradient(145deg, rgba(79,163,220,1), rgba(31,59,115,1));
+      border: 1px solid rgba(255,255,255,.35);
+      box-shadow: 0 14px 32px rgba(31,59,115,.35);
+      padding: 4px;
+      display:grid;
+      place-items:center;
+    }
+    .logo img{
+      width:100%; height:100%; object-fit:contain;
+      border-radius: 10px;
+      display:block;
+      background: #030712;
     }
     .brand .name{ font-weight: 750; letter-spacing: .2px; }
     .brand .sub{ display:block; font-size: 12px; color: var(--muted); margin-top: -2px; }
 
-    .navlinks{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .navlinks{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
     .chip{
       display:inline-flex; align-items:center; gap:8px;
-      padding: 9px 12px;
+      padding: 9px 14px;
       border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
+      border: 1px solid transparent;
+      background: rgba(31,59,115,.08);
+      color: var(--primary);
       font-size: 13px;
       white-space: nowrap;
+      font-weight: 600;
     }
-    .chip:hover{ background: rgba(255,255,255,.06); text-decoration:none; }
+    .chip:hover{ background: rgba(31,59,115,.12); text-decoration:none; }
     .chip:focus{ outline:none; box-shadow: 0 0 0 4px var(--ring); }
 
+    .nav-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:flex-end; }
     .lang{
       display:flex; align-items:center; gap:10px;
     }
-    label{ color: var(--muted); font-size: 13px; }
+    label{ color: var(--muted); font-size: 13px; font-weight: 600; }
     select{
-      background: rgba(255,255,255,.04);
+      background: rgba(255,255,255,.9);
       border:1px solid var(--border);
-      color: var(--text);
-      padding: 9px 12px;
+      color: var(--primary);
+      padding: 8px 34px 8px 14px;
       border-radius: 999px;
       font-size: 13px;
       appearance:none;
+      font-weight:600;
+      background-image: linear-gradient(45deg, transparent 50%, var(--primary) 50%),
+                        linear-gradient(135deg, var(--primary) 50%, transparent 50%);
+      background-position: calc(100% - 18px) calc(50% - 3px), calc(100% - 12px) calc(50% - 3px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
     }
     select:focus{ outline:none; box-shadow: 0 0 0 4px var(--ring); }
 
     .hero{
-      margin-top: 22px;
-      padding: 28px 22px;
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-      border-radius: calc(var(--radius) + 8px);
+      margin-top: 28px;
+      padding: 40px 36px;
+      border: 1px solid rgba(31,59,115,.08);
+      background: linear-gradient(135deg, rgba(255,255,255,.95), rgba(239,244,255,.85));
+      border-radius: 28px;
       box-shadow: var(--shadow);
       position:relative;
       overflow:hidden;
@@ -130,14 +151,14 @@
       content:"";
       position:absolute; inset:-2px;
       background:
-        radial-gradient(500px 160px at 20% 10%, rgba(34,211,238,.18), transparent 60%),
-        radial-gradient(520px 180px at 78% 0%, rgba(99,102,241,.18), transparent 65%);
+        radial-gradient(520px 220px at 15% 20%, rgba(79,163,220,.20), transparent 60%),
+        radial-gradient(540px 240px at 85% 0%, rgba(31,59,115,.22), transparent 70%);
       pointer-events:none;
     }
     .hero-grid{
       display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 22px;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 32px;
       align-items: start;
       position: relative;
       z-index: 1;
@@ -148,55 +169,80 @@
     }
 
     h1{
-      font-size: clamp(30px, 4vw, 46px);
-      line-height: 1.05;
+      font-size: clamp(32px, 4vw, 54px);
+      line-height: 1.08;
       margin: 0 0 12px;
       letter-spacing: -0.6px;
     }
     .lede{
       margin: 0 0 16px;
       color: var(--muted);
-      font-size: 16px;
+      font-size: 17px;
       max-width: 60ch;
     }
-    .cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top: 14px; }
+    .checklist{
+      list-style:none;
+      padding:0;
+      margin: 18px 0 0;
+      display:grid;
+      gap:10px;
+    }
+    .checklist li{
+      display:flex; align-items:center; gap:10px;
+      font-weight:600;
+      color: var(--primary);
+      font-size: 15px;
+    }
+    .checklist .check-icon{
+      width:22px; height:22px; border-radius:8px;
+      display:grid; place-items:center;
+      background: rgba(79,163,220,.15);
+      color: var(--primary);
+      font-size: 12px;
+      flex-shrink:0;
+    }
+    .cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top: 22px; }
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:10px;
       padding: 11px 14px;
       border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.05);
-      color: var(--text);
+      border: 1px solid rgba(31,59,115,.12);
+      background: rgba(255,255,255,.9);
+      color: var(--primary);
       font-weight: 650;
       font-size: 14px;
       text-decoration:none;
-      transition: transform .06s ease, background .12s ease;
+      transition: transform .08s ease, background .12s ease, box-shadow .12s ease;
     }
-    .btn:hover{ background: rgba(255,255,255,.08); text-decoration:none; transform: translateY(-1px); }
+    .btn:hover{ background: rgba(31,59,115,.08); text-decoration:none; transform: translateY(-1px); }
     .btn:focus{ outline:none; box-shadow: 0 0 0 4px var(--ring); }
     .btn.primary{
-      border-color: rgba(125,211,252,.35);
-      background: linear-gradient(135deg, rgba(99,102,241,.85), rgba(34,211,238,.78));
-      box-shadow: 0 14px 38px rgba(34,211,238,.12);
+      border-color: transparent;
+      color:#fff;
+      background: linear-gradient(125deg, var(--primary), var(--secondary));
+      box-shadow: 0 20px 40px rgba(31,59,115,.28);
+      padding: 12px 20px;
     }
-    .btn.primary:hover{ transform: translateY(-1px); filter: brightness(1.03); }
+    .btn.primary:hover{ transform: translateY(-2px); filter: brightness(1.02); }
+    .btn.nav-cta{ padding: 10px 18px; font-size: 13px; }
 
     .metrics{
       display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
     }
     .metric{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      border-radius: 16px;
-      padding: 14px 14px;
+      border:1px solid rgba(31,59,115,.08);
+      background: var(--panel);
+      border-radius: 18px;
+      padding: 20px 18px;
+      box-shadow: 0 12px 30px rgba(15,23,42,.08);
     }
-    .metric b{ display:block; font-size: 14px; margin-bottom: 4px; }
-    .metric span{ color: var(--muted); font-size: 13px; }
+    .metric b{ display:block; font-size: 15px; margin-bottom: 6px; color: var(--primary); }
+    .metric span{ color: var(--muted); font-size: 14px; }
 
     .section{
-      margin-top: 18px;
+      margin-top: 40px;
       display:grid;
       grid-template-columns: 1fr;
       gap: 14px;
@@ -204,50 +250,53 @@
     .cards{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 16px;
+      gap: 16px;
+      margin-top: 20px;
     }
     @media (max-width: 900px){ .cards{ grid-template-columns: 1fr; } }
 
     .card{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: 0 8px 22px rgba(0,0,0,.10);
+      border:1px solid rgba(31,59,115,.08);
+      background: var(--panel);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 12px 28px rgba(15,23,42,.08);
+      display:flex;
+      flex-direction:column;
+      gap:6px;
     }
-    .card h3{ margin: 0 0 8px; font-size: 16px; }
-    .card p{ margin: 0; color: var(--muted); }
+    .card h3{ margin: 0; font-size: 17px; color: var(--primary); }
+    .card p{ margin: 0; color: var(--muted); font-size: 14px; }
     .icon{
-      width: 38px; height: 38px;
+      width: 44px; height: 44px;
       border-radius: 14px;
       display:grid; place-items:center;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.05);
-      margin-bottom: 10px;
-      font-size: 18px;
+      border:1px solid rgba(31,59,115,.08);
+      background: rgba(79,163,220,.12);
+      margin-bottom: 12px;
+      font-size: 20px;
     }
 
     .split{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 14px;
+      gap: 16px;
+      margin-top: 20px;
     }
     @media (max-width: 900px){ .split{ grid-template-columns: 1fr; } }
 
     .callout{
-      border:1px dashed rgba(125,211,252,.35);
-      background: rgba(125,211,252,.06);
-      border-radius: var(--radius);
-      padding: 14px 16px;
+      border:1px dashed rgba(79,163,220,.4);
+      background: rgba(79,163,220,.08);
+      border-radius: 22px;
+      padding: 18px 20px;
       color: var(--text);
     }
     .callout p{ margin: 6px 0; color: var(--muted); }
     .callout b{ display:block; margin-bottom: 4px; }
 
     .footer{
-      margin-top: 26px;
+      margin-top: 60px;
       padding: 18px 2px 0;
       color: var(--muted);
       font-size: 13px;
@@ -268,7 +317,9 @@
   <main class="wrap">
     <nav class="nav" role="navigation" aria-label="Primary">
       <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
+        <div class="logo">
+          <img src="assets/images/DueMate-Icon-v2.png" width="36" height="36" alt="DueMate logo" loading="eager" decoding="async" fetchpriority="high" />
+        </div>
         <div>
           <div class="name">DueMate</div>
           <span class="sub" id="brandSub">by Ecureye</span>
@@ -282,13 +333,16 @@
         <a class="chip" href="privacy-policy.html" id="navPrivacyPolicy">Privacy Policy</a>
       </div>
 
-      <div class="lang">
-        <label for="langSelect" id="langLabel">Language</label>
-        <select id="langSelect" aria-label="Language selector">
-          <option value="auto">Auto</option>
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-        </select>
+      <div class="nav-actions">
+        <div class="lang">
+          <label for="langSelect" id="langLabel">Language</label>
+          <select id="langSelect" aria-label="Language selector">
+            <option value="auto">Auto</option>
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+          </select>
+        </div>
+        <a class="btn primary nav-cta" href="#features" id="navDemo">Request a demo</a>
       </div>
     </nav>
 
@@ -300,6 +354,12 @@
             DueMate helps organizations manage customers, loans, repayments, reminders, and reporting in one secure platform —
             with role-based access and audit trails.
           </p>
+
+          <ul class="checklist" aria-label="Platform highlights">
+            <li><span class="check-icon" aria-hidden="true">✓</span><span id="heroCheck1">Unified customer, loan, and repayment context</span></li>
+            <li><span class="check-icon" aria-hidden="true">✓</span><span id="heroCheck2">Automations that keep teams proactive</span></li>
+            <li><span class="check-icon" aria-hidden="true">✓</span><span id="heroCheck3">Dashboards ready for audits and reviews</span></li>
+          </ul>
 
           <div class="cta-row">
             <a class="btn primary" href="#features" id="ctaExplore">Explore features</a>
@@ -453,11 +513,15 @@
         navSecurity: "Security",
         navPrivacy: "Privacy",
         navPrivacyPolicy: "Privacy Policy",
+        navDemo: "Request a demo",
         langLabel: "Language",
 
         heroTitle: "Modern collections & repayment tracking, built for teams.",
         heroLede:
           "DueMate helps organizations manage customers, loans, repayments, reminders, and reporting in one secure platform — with role-based access and audit trails.",
+        heroCheck1: "Unified customer, loan, and repayment context",
+        heroCheck2: "Automations that keep teams proactive",
+        heroCheck3: "Dashboards ready for audits and reviews",
         ctaExplore: "Explore features",
         ctaPrivacy: "Read privacy policy",
 
@@ -517,11 +581,15 @@
         navSecurity: "Sécurité",
         navPrivacy: "Confidentialité",
         navPrivacyPolicy: "Politique de confidentialité",
+        navDemo: "Demander une démo",
         langLabel: "Langue",
 
         heroTitle: "Suivi moderne des encaissements et des remboursements, pensé pour les équipes.",
         heroLede:
           "DueMate aide les organisations à gérer les clients, les prêts, les remboursements, les rappels et les rapports sur une plateforme sécurisée — avec des accès par rôles et des pistes d’audit.",
+        heroCheck1: "Vue unifiée client, prêt et remboursement",
+        heroCheck2: "Automatisations qui gardent vos équipes proactives",
+        heroCheck3: "Tableaux de bord prêts pour les audits",
         ctaExplore: "Découvrir les fonctionnalités",
         ctaPrivacy: "Lire la politique",
 
@@ -578,8 +646,8 @@
     };
 
     const ids = [
-      "brandSub","navFeatures","navSecurity","navPrivacy","navPrivacyPolicy","langLabel",
-      "heroTitle","heroLede","ctaExplore","ctaPrivacy",
+      "brandSub","navFeatures","navSecurity","navPrivacy","navPrivacyPolicy","navDemo","langLabel",
+      "heroTitle","heroLede","heroCheck1","heroCheck2","heroCheck3","ctaExplore","ctaPrivacy",
       "calloutTitle","calloutText",
       "m1Title","m1Text","m2Title","m2Text","m3Title","m3Text",
       "featuresTitle","featuresIntro",
